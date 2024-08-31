@@ -1,6 +1,5 @@
-package com.kimatesting.qa.selenium_springboot;
+package com.kimatesting.qa.selenium_springboot.config;
 
-import com.kimatesting.qa.selenium_springboot.config.TestConfig;
 import io.cucumber.java.Before;
 import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
