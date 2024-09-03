@@ -25,3 +25,4 @@ target/
 .mvn/
 mvnw
 mvnw.cmd
+/test-report.html
