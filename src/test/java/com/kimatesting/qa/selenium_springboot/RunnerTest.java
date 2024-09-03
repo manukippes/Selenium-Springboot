@@ -8,6 +8,9 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = "com.kimatesting.qa.selenium_springboot",
+        plugin = {
+                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
+        },
         tags = ""
 )
 public class RunnerTest {
