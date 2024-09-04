@@ -25,4 +25,7 @@ target/
 .mvn/
 mvnw
 mvnw.cmd
+
+### Selenium ###
 /test-report.html
+**/application-qa.properties

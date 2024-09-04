@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.net.URI;
 import java.util.HashMap;
+import java.util.UUID;
 
 @Component
 public class DriverFactory {
@@ -20,6 +21,10 @@ public class DriverFactory {
     private String selenoidUrl;
     @Value("${remote.selenium.grid.url}")
     private String seleniumGridUrl;
+    @Value("${lambatest.username}")
+    private String lambatestUsername;
+    @Value("${lambatest.accessKey}")
+    private String lambatestAccessKey;
 
     public WebDriver createDriver(Boolean remoteExecution, Platform remotePlatform, Browser browser, Boolean headless, int width, int height) throws Exception {
         if (remoteExecution) {
@@ -51,6 +56,9 @@ public class DriverFactory {
                 return seleniumGridUrl;
             case selenoid:
                 return selenoidUrl;
+            case lambatest:
+                String url = String.format("https://%1$s:%2$s@hub.lambdatest.com/wd/hub", lambatestUsername, lambatestAccessKey);
+                return url;
             default:
                 throw new Exception(String.format("The remote platform %s was not found", remotePlatform));
         }
@@ -69,12 +77,21 @@ public class DriverFactory {
                 throw new IllegalArgumentException("Unsupported browser: " + browser);
         }
 
-        if (remotePlatform.equals(Platform.selenoid)) {
-            options.setCapability("selenoid:options", new HashMap<String, Object>() {{
-                put("enableVideo", true);
-                put("enableVNC", true);
-            }});
+        switch (remotePlatform) {
+            case selenoid:
+                options.setCapability("selenoid:options", new HashMap<String, Object>() {{
+                    put("enableVideo", true);
+                    put("enableVNC", true);
+                }});
+            case lambatest:
+                options.setCapability("LT:Options", new HashMap<String, Object>() {{
+                put("project", "KIMA Testing");
+                put("w3c", true);
+                }});
+                options.setCapability("build", "TestInLambatest");
+                options.setCapability("name", "Test"+ UUID.randomUUID());
         }
+
         return options;
     }
 
