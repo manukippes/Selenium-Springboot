@@ -6,6 +6,8 @@ on:
 env:
   lambatestAccessKey: ${{ secrets.LAMBATESTACCESSKEY }}
   lambatestUsername: ${{ secrets.LAMBATESTUSERNAME }}
+  seleniumGridUrl: ${{ secrets.SELENIUMGRIDURL }}
+  selenoidUrl: ${{ secrets.SELENOIDURL }}
   url: ${{ secrets.URL }}
 
 jobs:
