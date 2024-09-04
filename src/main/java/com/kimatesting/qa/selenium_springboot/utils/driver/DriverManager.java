@@ -1,6 +1,7 @@
 package com.kimatesting.qa.selenium_springboot.utils.driver;
 
 import com.kimatesting.qa.selenium_springboot.enums.Browser;
+import com.kimatesting.qa.selenium_springboot.enums.Platform;
 import io.cucumber.spring.ScenarioScope;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -35,26 +36,15 @@ public class DriverManager {
     private int browserHeight;
     @Value("${timeout}")
     private int timeout;
-    @Value("${remote.grid.url}")
-    private String remoteGridUrl;
+    @Value("${remote.platform}")
+    private Platform remotePlatform;
     @Value("${remote.execution}")
     private Boolean remoteExecution;
 
     @Bean(destroyMethod = "quit")
     @ScenarioScope
     public WebDriver driver() throws Exception {
-        if (remoteExecution){
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments(String.format("--window-size=%d,%d", browserWidth, browserHeight));
-            options.setCapability("selenoid:options", new HashMap<String, Object>() {{
-                put("enableVideo", true);
-                put("enableVNC", true);
-            }});
-            //return new RemoteWebDriver(URI.create("http://192.168.1.15:4444/").toURL(), chromeOptions);
-            return new RemoteWebDriver(URI.create("http://192.168.1.15:4444/wd/hub").toURL(), options);
-        }else{
-            return driverFactory.createDriver(browser,browserHeadless, browserWidth, browserHeight);
-        }
+        return driverFactory.createDriver(remoteExecution, remotePlatform,browser,browserHeadless, browserWidth, browserHeight);
     }
 
     @Bean
