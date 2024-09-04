@@ -84,10 +84,9 @@ public class DriverFactory {
             case lambatest:
                 options.setCapability("LT:Options", new HashMap<String, Object>() {{
                 put("project", "KIMA Testing");
-                put("w3c", true);
+                put("build", "Regression of KIMA Testing");
+                put("name", "Regression test");
                 }});
-                options.setCapability("build", "TestInLambatest");
-                options.setCapability("name", "Test"+ UUID.randomUUID());
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported platform: " + remotePlatform);
