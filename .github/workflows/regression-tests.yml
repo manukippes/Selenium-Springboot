@@ -3,8 +3,14 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  lambatest.accessKey: ${{ secrets.LAMBATESTACCESSKEY }}
+  lambatest.username: ${{ secrets.LAMBATESTUSERNAME }}
+  url: ${{ secrets.URL }}
+
 jobs:
   regression-test:
+    environment: qa
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
