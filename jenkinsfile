@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Download code') {
+            steps {
+                git url: 'https://github.com/manukippes/Selenium-Springboot', branch: "main"
+            }
+        }
+
+        stage('Start Testing') {
+            steps {
+                withMaven() {
+                    sh "mvn clean test"
+                }
+            }
+        }
+    }
+
+    post {
+        always{
+            publishHTML([
+                            reportName : 'Test Report',
+                            reportDir: '.',
+                            reportFiles: 'Test-Report.html',
+                            keepAll:     true,
+                            alwaysLinkToLastBuild: true,
+                            allowMissing: false
+                        ])
+        }
+    }
+}

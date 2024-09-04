@@ -9,7 +9,6 @@ import io.cucumber.spring.ScenarioScope;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@ScenarioScope
 public class LandingSteps {
 
 	@Autowired
