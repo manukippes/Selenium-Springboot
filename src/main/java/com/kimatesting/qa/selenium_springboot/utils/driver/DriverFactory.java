@@ -17,10 +17,7 @@ import java.util.UUID;
 
 @Component
 public class DriverFactory {
-    @Value("${remote.selenoid.url}")
-    private String selenoidUrl;
-    @Value("${remote.selenium.grid.url}")
-    private String seleniumGridUrl;
+
     @Value("${lambatest.username}")
     private String lambatestUsername;
     @Value("${lambatest.accessKey}")
@@ -53,11 +50,11 @@ public class DriverFactory {
     private String getRemoteUrl(Platform remotePlatform) throws Exception {
         switch (remotePlatform) {
             case seleniumGrid:
-                return seleniumGridUrl;
+                return System.getenv("seleniumGridUrl");
             case selenoid:
-                return selenoidUrl;
+                return System.getenv("selenoidUrl");
             case lambatest:
-                String url = String.format("https://%1$s:%2$s@hub.lambdatest.com/wd/hub", lambatestUsername, lambatestAccessKey);
+                String url = String.format("https://%1$s:%2$s@hub.lambdatest.com/wd/hub", System.getenv("lambatestUsername"), System.getenv("lambatestAccessKey"));
                 return url;
             default:
                 throw new Exception(String.format("The remote platform %s was not found", remotePlatform));
@@ -83,13 +80,16 @@ public class DriverFactory {
                     put("enableVideo", true);
                     put("enableVNC", true);
                 }});
+                break;
             case lambatest:
                 options.setCapability("LT:Options", new HashMap<String, Object>() {{
                 put("project", "KIMA Testing");
-                put("w3c", true);
+                put("build", "Regression of KIMA Testing");
+                put("name", "Regression test");
                 }});
-                options.setCapability("build", "TestInLambatest");
-                options.setCapability("name", "Test"+ UUID.randomUUID());
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported platform: " + remotePlatform);
         }
 
         return options;

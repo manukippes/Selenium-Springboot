@@ -26,19 +26,19 @@ public class DriverManager {
     @Autowired
     public DriverFactory driverFactory;
 
-    @Value("${browser}")
+    @Value("${browser:CHROME}")
     private Browser browser;
-    @Value("${browserHeadless}")
+    @Value("${browserHeadless:false}")
     private Boolean browserHeadless;
-    @Value("${browserWidth}")
+    @Value("${browserWidth:1920}")
     private int browserWidth;
-    @Value("${browserHeight}")
+    @Value("${browserHeight:1080}")
     private int browserHeight;
-    @Value("${timeout}")
+    @Value("${timeout:30}")
     private int timeout;
-    @Value("${remote.platform}")
+    @Value("${remote.platform:lambatest}")
     private Platform remotePlatform;
-    @Value("${remote.execution}")
+    @Value("${remote.execution:true}")
     private Boolean remoteExecution;
 
     @Bean(destroyMethod = "quit")

@@ -1,10 +1,19 @@
 name: Regression Tests
 on:
-  pull_request:
-    branches: [main]
+#  pull_request:
+#    branches: [main]
+  workflow_dispatch:
+
+env:
+  lambatestAccessKey: ${{ secrets.LAMBATESTACCESSKEY }}
+  lambatestUsername: ${{ secrets.LAMBATESTUSERNAME }}
+  seleniumGridUrl: ${{ secrets.SELENIUMGRIDURL }}
+  selenoidUrl: ${{ secrets.SELENOIDURL }}
+  url: ${{ secrets.URL }}
 
 jobs:
   regression-test:
+    environment: qa
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
