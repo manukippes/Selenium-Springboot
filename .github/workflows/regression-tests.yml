@@ -4,8 +4,8 @@ on:
     branches: [main]
 
 env:
-  lambatest.accessKey: ${{ secrets.LAMBATESTACCESSKEY }}
-  lambatest.username: ${{ secrets.LAMBATESTUSERNAME }}
+  lambatestAccessKey: ${{ secrets.LAMBATESTACCESSKEY }}
+  lambatestUsername: ${{ secrets.LAMBATESTUSERNAME }}
   url: ${{ secrets.URL }}
 
 jobs:
