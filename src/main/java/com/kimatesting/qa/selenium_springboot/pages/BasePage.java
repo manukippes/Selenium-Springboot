@@ -29,7 +29,7 @@ public class BasePage {
 	}
 
 	protected void clickElement(WebElement element) {
-		element.click();
+		waitForElement(element).click();
 	}
 
 	// GET INFO
@@ -48,8 +48,8 @@ public class BasePage {
 	protected WebElement findElementByXpath(String locator) {
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
 	}
-	protected void waitForElement(WebElement element) {
-		wait.until(ExpectedConditions.visibilityOf(element));
+	protected WebElement waitForElement(WebElement element) {
+		return wait.until(ExpectedConditions.visibilityOf(element));
 	}
 
 	protected void waitFixTime() throws InterruptedException {Thread.sleep(1000);}
